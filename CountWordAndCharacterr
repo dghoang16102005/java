@@ -1,0 +1,66 @@
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
+public class TextAnalyzer {
+
+    /**
+     * Kiểm tra chuỗi chỉ chứa chữ cái và khoảng trắng (không có ký tự đặc biệt, số, dấu câu)
+     */
+    public static boolean isValidInput(String input) {
+        return input.matches("[a-zA-Z\\s]+");
+    }
+
+    /**
+     * Đếm số lần xuất hiện của mỗi từ
+     */
+    public static Map<String, Integer> countWords(String input) {
+        Map<String, Integer> wordCount = new HashMap<>();
+        String[] words = input.toLowerCase().trim().split("\\s+");
+
+        for (String word : words) {
+            wordCount.put(word, wordCount.getOrDefault(word, 0) + 1);
+        }
+
+        return wordCount;
+    }
+
+    /**
+     * Đếm số lần xuất hiện của mỗi ký tự (bỏ qua khoảng trắng)
+     */
+    public static Map<Character, Integer> countCharacters(String input) {
+        Map<Character, Integer> charCount = new HashMap<>();
+        String cleaned = input.toLowerCase().replaceAll("\\s+", "");
+
+        for (char ch : cleaned.toCharArray()) {
+            charCount.put(ch, charCount.getOrDefault(ch, 0) + 1);
+        }
+
+        return charCount;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Nhập một chuỗi không chứa ký tự đặc biệt:");
+
+        String input = scanner.nextLine();
+
+        // VALIDATION
+        if (!isValidInput(input)) {
+            System.out.println("❌ Chuỗi không hợp lệ. Chỉ được chứa chữ cái và khoảng trắng.");
+            return;
+        }
+
+        // Đếm từ
+        Map<String, Integer> wordFrequency = countWords(input);
+        System.out.println("\n📊 Số lần xuất hiện của từng từ:");
+        wordFrequency.forEach((word, count) ->
+                System.out.println("Từ \"" + word + "\": " + count + " lần"));
+
+        // Đếm ký tự
+        Map<Character, Integer> charFrequency = countCharacters(input);
+        System.out.println("\n📊 Số lần xuất hiện của từng ký tự:");
+        charFrequency.forEach((ch, count) ->
+                System.out.println("Ký tự '" + ch + "': " + count + " lần"));
+    }
+}
