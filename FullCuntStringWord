@@ -1,0 +1,53 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
+ */
+package countstringcountword;
+
+import java.util.HashMap;
+
+/**
+ *
+ * @author Duong Hoang
+ */
+public class CountStringCountWord {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static HashMap<String, Integer> countWord(String countWord){
+        HashMap<String, Integer> result = new HashMap<>();
+        String[] splitStrings = countWord.split("\\s+");
+        for(int i =0 ; i< splitStrings.length ; i++){
+            result.put(splitStrings[i], result.getOrDefault(splitStrings[i], 0)+1);
+        }
+        
+        return  result;
+    }
+    
+        public static HashMap<Character, Integer> countCharacter(String countCharacter){
+        HashMap<Character, Integer> result = new HashMap<>();
+        String splitCharacter = countCharacter.replaceAll("\\s+", "");
+        for(int i =0 ; i< splitCharacter.length() ; i++){
+            result.put(splitCharacter.charAt(i), result.getOrDefault(splitCharacter.charAt(i), 0)+1);
+        }
+        
+        return  result;
+    }
+        
+        public static void displayResult(HashMap hasmap){
+            System.out.println(hasmap);
+        }
+    
+    public static void main(String[] args) {
+        // TODO code application logic here
+        
+        String input = Validation.getString("Please Input String count: ", "[A-Za-z0-9 ]+");
+        displayResult(CountStringCountWord.countCharacter(input));
+        displayResult(CountStringCountWord.countWord(input));
+    
+    
+    }
+    
+    
+}
